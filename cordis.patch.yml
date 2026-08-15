@@ -1,0 +1,38 @@
+# The dsh-egress-guard bundle patch.
+#
+# Inserts one policy plugin into the profile. Every field below is restated in
+# full: a patch replaces a row's whole `config`, so a user overriding this row
+# in their own profile patch must restate the keys they keep.
+#
+# The shipped default is `mode: monitor` — the guard evaluates every rule and
+# writes the audit log, but denies nothing and redacts nothing. Installing this
+# bundle therefore cannot break a working setup. Switch to `enforce` in your
+# profile's cordis.patch.yml once the audit log shows the policy is right.
+
+- insert:
+    - id: egress-guard
+      name: dsh-egress-guard
+      config:
+        mode: monitor
+        egress:
+          enabled: true
+          allowHosts:
+            - '*.deepseek.com'
+            - '*.githubusercontent.com'
+            - '*.github.com'
+            - '*.npmjs.org'
+            - '*.pypi.org'
+            - '*.golang.org'
+            - '*.crates.io'
+          denyHosts: []
+          allowLoopback: true
+          onViolation: deny
+        redact:
+          enabled: true
+          builtins: true
+          extraPatterns: []
+          placeholder: '[redacted:{name}]'
+        audit:
+          enabled: true
+          path: ''
+          logAllowed: false
