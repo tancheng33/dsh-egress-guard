@@ -1,5 +1,8 @@
 # dsh-egress-guard
 
+[![npm](https://img.shields.io/npm/v/dsh-egress-guard?color=4D6BFE)](https://www.npmjs.com/package/dsh-egress-guard)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 English | [中文](README.zh.md)
 
 A **runtime** security gate for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) tool calls.
@@ -89,7 +92,7 @@ This is a **guard rail, not a containment boundary**. It raises the cost of an a
 
 ## Compatibility
 
-Built against the `@deepseek-ai/dsh-tools` `0.1.0-rc` pipeline contract and verified two ways: the test suite runs against `0.1.0-rc.6` from npm, and the plugin was booted in a real `dsh 0.1.0-rc.5` profile, reaching `fiberPhase: active`.
+Built against the `@deepseek-ai/dsh-tools` `0.1.0-rc` pipeline contract. The test suite runs against `0.1.0-rc.6` from npm, and the bundle was installed into a live `dsh 0.1.0-rc.5` profile four ways — from npm, from a local path, from a packed tarball, and from git — reaching `fiberPhase: active` in all four.
 
 Note that npm's `latest` tag for the `@deepseek-ai/*` packages still points at an old `0.0.1-rc.1` line; the current releases are on the `next` tag. If you install harness packages by hand, ask for the version explicitly.
 

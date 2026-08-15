@@ -1,5 +1,8 @@
 # dsh-egress-guard
 
+[![npm](https://img.shields.io/npm/v/dsh-egress-guard?color=4D6BFE)](https://www.npmjs.com/package/dsh-egress-guard)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 [English](README.md) | 中文
 
 给 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 工具调用加的**运行时**安全网关。
@@ -89,7 +92,7 @@ jq -r '.hosts[]?' ~/.dsh/egress-guard.jsonl | sort | uniq -c | sort -rn
 
 ## 兼容性
 
-针对 `@deepseek-ai/dsh-tools` `0.1.0-rc` 的管线契约开发，并做了两重验证：测试套件跑在 npm 上的 `0.1.0-rc.6`；插件在真实的 `dsh 0.1.0-rc.5` profile 里启动过，`fiberPhase` 为 `active`。
+针对 `@deepseek-ai/dsh-tools` `0.1.0-rc` 的管线契约开发。测试套件跑在 npm 上的 `0.1.0-rc.6`；bundle 在真实的 `dsh 0.1.0-rc.5` profile 里用 npm、本地路径、打包 tarball、git 四种方式各装过一遍，`fiberPhase` 均为 `active`。
 
 另外提醒：npm 上 `@deepseek-ai/*` 的 `latest` 标签还停在很旧的 `0.0.1-rc.1`，当前版本在 `next` 标签上。手动安装 harness 相关包时请显式指定版本。
 
