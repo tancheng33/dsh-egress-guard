@@ -119,6 +119,13 @@ npm run typecheck
 npm run build
 ```
 
+Every release in `dsh.compatibility.dshReleases` is exercised by CI. To reproduce one locally, pin the whole harness family and run the suite against it (`package.json` and the lockfile are restored afterwards):
+
+```sh
+node scripts/pin-dsh.mjs 0.1.6-alpha.2
+npm run typecheck && npm test && npm run build
+```
+
 To try it against a live harness without publishing:
 
 ```sh

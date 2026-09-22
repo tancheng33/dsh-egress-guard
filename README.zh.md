@@ -119,6 +119,13 @@ npm run typecheck
 npm run build
 ```
 
+`dsh.compatibility.dshReleases` 里的每个版本 CI 都会跑。本地复现某一个版本时，把整个 harness 家族钉到该版本再跑套件（`package.json` 和 lockfile 跑完会还原）：
+
+```sh
+node scripts/pin-dsh.mjs 0.1.6-alpha.2
+npm run typecheck && npm test && npm run build
+```
+
 不发包也能在真实 harness 上试：
 
 ```sh
