@@ -9,6 +9,17 @@
  * @module dsh-egress-guard/redact
  */
 
+/**
+ * A JSON-shaped value.
+ *
+ * Declared here rather than imported from the harness: the shape is
+ * structural, it is the only harness type this module needs, and the upstream
+ * alias has already moved packages once (`dsh-session` → `dsh-util-values`)
+ * between DSH release lines. Owning it keeps the guard building against every
+ * line that speaks the same pipeline contract.
+ */
+export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue }
+
 /** One named secret shape and how its match is rewritten. */
 export interface SecretPattern {
   /** Stable identifier; it names the hit in the audit log and the placeholder. */

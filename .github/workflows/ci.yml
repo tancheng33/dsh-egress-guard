@@ -8,12 +8,26 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The pinned devDependency line, plus the newest prerelease line the
+        # manifest declares compatible in `dsh.compatibility.dshReleases`.
+        dsh: ['0.1.5-rc.2', '0.1.6-alpha.2']
+    name: test (dsh ${{ matrix.dsh }})
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm install
+      - name: Pin the harness packages to ${{ matrix.dsh }}
+        run: |
+          npm install --no-save \
+            @deepseek-ai/dsh-llm@${{ matrix.dsh }} \
+            @deepseek-ai/dsh-tools@${{ matrix.dsh }} \
+            @deepseek-ai/dsh-session@${{ matrix.dsh }} \
+            @deepseek-ai/dsh-system-prompt@${{ matrix.dsh }}
       - run: npm run typecheck
       - run: npm test
       - run: npm run build

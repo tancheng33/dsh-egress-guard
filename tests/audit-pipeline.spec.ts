@@ -10,7 +10,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { CallId } from '@deepseek-ai/dsh-llm'
+import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime, { defineTool } from '@deepseek-ai/dsh-tools'
 import { FAKE_API_KEY } from './fixtures.js'
@@ -60,7 +60,7 @@ async function readRecords(path: string, fork: { dispose(): Promise<unknown> }):
 }
 
 function call(ctx: Context, args: Record<string, unknown>) {
-  return ctx.tools.execute({ callId: CallId('audit-test'), name: 'echo', arguments: args, signal })
+  return ctx.tools.execute({ callId: ToolCallId('audit-test'), name: 'echo', arguments: args, signal })
 }
 
 describe('audit log through the pipeline', () => {

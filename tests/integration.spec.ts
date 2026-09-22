@@ -8,7 +8,7 @@
 
 import { describe, expect, it } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { CallId } from '@deepseek-ai/dsh-llm'
+import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
 import ToolRuntime, { defineTool } from '@deepseek-ai/dsh-tools'
 import { FAKE_API_KEY, FAKE_AWS_KEY, FAKE_GITHUB_TOKEN } from './fixtures.js'
@@ -79,7 +79,7 @@ async function setup(config: PartialConfig) {
 }
 
 function call(ctx: Context, name: string, args: Record<string, unknown>) {
-  return ctx.tools.execute({ callId: CallId(`test-${name}`), name, arguments: args, signal })
+  return ctx.tools.execute({ callId: ToolCallId(`test-${name}`), name, arguments: args, signal })
 }
 
 describe('egress gate', () => {

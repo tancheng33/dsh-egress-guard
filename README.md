@@ -92,9 +92,21 @@ This is a **guard rail, not a containment boundary**. It raises the cost of an a
 
 ## Compatibility
 
-Built against the `@deepseek-ai/dsh-tools` `0.1.0-rc` pipeline contract. The test suite runs against `0.1.0-rc.6` from npm, and the bundle was installed into a live `dsh 0.1.0-rc.5` profile four ways — from npm, from a local path, from a packed tarball, and from git — reaching `fiberPhase: active` in all four.
+Built against the `@deepseek-ai/dsh-tools` `0.1.5` / `0.1.6` pipeline contract; `dsh.compatibility.dshReleases` in `package.json` carries the per-release declaration.
 
-Note that npm's `latest` tag for the `@deepseek-ai/*` packages still points at an old `0.0.1-rc.1` line; the current releases are on the `next` tag. If you install harness packages by hand, ask for the version explicitly.
+Verified on 2026-09-22, each release line pinned across the whole `@deepseek-ai/dsh-*` family:
+
+| DSH release | typecheck | build | tests |
+|---|---|---|---|
+| `0.1.5-rc.2` (npm `latest`) | pass | pass | 61/61 |
+| `0.1.6-alpha.1` | pass | pass | 61/61 |
+| `0.1.6-alpha.2` (npm `alpha`) | pass | pass | 61/61 |
+
+On `0.1.5-rc.2` the packed tarball was also installed into a disposable profile (`DSH_HOME` pointed at a throwaway directory, `--from-default-profile headless`): the bundle composes into the profile tree as the `egress-guard` row, the profile boots with it loaded — stopping only at the provider credential gate — and `dsh plugin remove` takes both the dependency and the row back out.
+
+**0.2.0 drops the `0.1.0-rc` line.** Upstream renamed `CallId` to `ToolCallId` and moved `JsonValue` out of `dsh-session`, so a build against `0.1.0-rc.6` fails. Stay on `0.1.0` of this plugin if you are still on that harness line.
+
+Note that npm's `latest` tag for the `@deepseek-ai/*` packages now points at `0.1.5-rc.2`, with the `0.1.6` prereleases on the `alpha` tag. If you install harness packages by hand, ask for the version explicitly.
 
 The harness is in developer preview and states that compatibility-breaking changes will happen. If a pipeline contract shifts, this plugin's tests are designed to fail loudly — they execute real calls through a real registry rather than mocking the waterfalls.
 

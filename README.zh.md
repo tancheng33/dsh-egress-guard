@@ -92,9 +92,21 @@ jq -r '.hosts[]?' ~/.dsh/egress-guard.jsonl | sort | uniq -c | sort -rn
 
 ## 兼容性
 
-针对 `@deepseek-ai/dsh-tools` `0.1.0-rc` 的管线契约开发。测试套件跑在 npm 上的 `0.1.0-rc.6`；bundle 在真实的 `dsh 0.1.0-rc.5` profile 里用 npm、本地路径、打包 tarball、git 四种方式各装过一遍，`fiberPhase` 均为 `active`。
+针对 `@deepseek-ai/dsh-tools` `0.1.5` / `0.1.6` 的管线契约开发；逐版本声明写在 `package.json` 的 `dsh.compatibility.dshReleases` 里。
 
-另外提醒：npm 上 `@deepseek-ai/*` 的 `latest` 标签还停在很旧的 `0.0.1-rc.1`，当前版本在 `next` 标签上。手动安装 harness 相关包时请显式指定版本。
+2026-09-22 验证，每条发布线都把整个 `@deepseek-ai/dsh-*` 家族钉到同一版本：
+
+| DSH 版本 | 类型检查 | 构建 | 测试 |
+|---|---|---|---|
+| `0.1.5-rc.2`（npm `latest`） | 通过 | 通过 | 61/61 |
+| `0.1.6-alpha.1` | 通过 | 通过 | 61/61 |
+| `0.1.6-alpha.2`（npm `alpha`） | 通过 | 通过 | 61/61 |
+
+在 `0.1.5-rc.2` 上还用打包 tarball 做了一次性 Profile 验证（`DSH_HOME` 指向临时目录，`--from-default-profile headless`）：bundle 作为 `egress-guard` 行合入 profile 树，profile 带着它启动、只停在供应商凭据门槛上，`dsh plugin remove` 把依赖和这一行都干净移除。
+
+**0.2.0 不再支持 `0.1.0-rc` 线**：上游把 `CallId` 改名为 `ToolCallId`，并把 `JsonValue` 从 `dsh-session` 挪走，对 `0.1.0-rc.6` 构建会直接失败。还留在那条线上的话请继续用本插件的 `0.1.0`。
+
+另外提醒：npm 上 `@deepseek-ai/*` 的 `latest` 标签现在指向 `0.1.5-rc.2`，`0.1.6` 预发布在 `alpha` 标签上。手动安装 harness 相关包时请显式指定版本。
 
 Harness 处于开发者预览期，官方明确说会有破坏性变更。契约一旦变动，本插件的测试会直接炸——因为它们是通过真实注册表执行真实调用，而不是 mock 瀑布。
 
